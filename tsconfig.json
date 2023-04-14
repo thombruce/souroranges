@@ -16,5 +16,10 @@
   "include": ["src"],
   "references": [
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "vueCompilerOptions": {
+    "plugins": [
+      "@volar/vue-language-plugin-pug"
+    ]
+  }
 }
