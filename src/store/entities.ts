@@ -1,11 +1,12 @@
 import { ref } from "vue"
 import { defineStore } from "pinia"
+import { v4 as uuidv4 } from "uuid"
 
 const loki = require("lokijs")
 
 interface Entity {
   item: string
-  id: number
+  id: string
   completed: boolean
 }
 
@@ -14,10 +15,10 @@ export const entities = defineStore('entityList', () => {
   let db = new loki('marmalade.json', { autosave: true, autoload: true, autoloadCallback: initStore }), entitiesData: any
 
   function initStore() {
-    entitiesData = db.getCollection('entities', { autoupdate: true })
+    entitiesData = db.getCollection('entities')
 
     if(!entitiesData){
-       entitiesData = db.addCollection('entities');
+       entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
     }
 
     entityList.value.push(...entitiesData.data)
@@ -25,25 +26,24 @@ export const entities = defineStore('entityList', () => {
 
   // State
   const entityList = ref([] as Entity[])
-  const id = ref(0)
 
   // Getters
   // e.g. const doubleCount = computed(() => count.value * 2)
 
   // Actions
   function addEntity(item: string) {
-    let newEntity = { item, id: id.value++, completed: false }
+    let newEntity = { item, id: uuidv4(), completed: false }
 
     entitiesData.insert(newEntity)
     entityList.value.push(newEntity)
   }
 
-  function deleteEntity(itemID: number) {
+  function deleteEntity(itemID: string) {
     entitiesData.chain().find({ id: itemID }).remove()
     entityList.value = entityList.value.filter((object) => {
       return object.id !== itemID
     })
   }
 
-  return { entityList, id, addEntity, deleteEntity }
+  return { entityList, addEntity, deleteEntity }
 })
