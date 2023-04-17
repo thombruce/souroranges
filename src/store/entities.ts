@@ -15,15 +15,22 @@ interface Entity {
 
 export const entities = defineStore('entityList', () => {
   // Setup
-  var dir = './marmalade.db'
+  let dbName = 'marmalade.db', db: any, entitiesData: any
 
-  if (!fs.existsSync(dir)){
+  var userAgent = navigator.userAgent.toLowerCase()
+  if (userAgent.indexOf(' electron/') > -1) {
+    var dir = './' + dbName
+
+    if (!fs.existsSync(dir)){
       fs.mkdirSync(dir)
+    }
+
+    var fsStructuredAdapter = new LokiFsStructuredAdapter('loki')
+
+    db = new loki(dir + '/store', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter })
+  } else {
+    db = new loki(dbName, { autosave: true, autoload: true, autoloadCallback: initStore })
   }
-
-  var fsStructuredAdapter = new LokiFsStructuredAdapter('loki')
-
-  let db = new loki(dir + '/store', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter }), entitiesData: any
 
   function initStore() {
     entitiesData = db.getCollection('entities')
