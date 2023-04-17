@@ -2,6 +2,8 @@ import { ref } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
 
+var fs = require('fs')
+
 const loki = require("lokijs")
 const LokiFsStructuredAdapter = require("lokijs/src/loki-fs-structured-adapter")
 
@@ -13,8 +15,15 @@ interface Entity {
 
 export const entities = defineStore('entityList', () => {
   // Setup
+  var dir = './marmalade.db'
+
+  if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir)
+  }
+
   var fsStructuredAdapter = new LokiFsStructuredAdapter('loki')
-  let db = new loki('marmalade.json', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter }), entitiesData: any
+
+  let db = new loki(dir + '/store', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter }), entitiesData: any
 
   function initStore() {
     entitiesData = db.getCollection('entities')
