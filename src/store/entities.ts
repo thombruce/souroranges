@@ -3,6 +3,7 @@ import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
 
 const loki = require("lokijs")
+const LokiFsStructuredAdapter = require("lokijs/src/loki-fs-structured-adapter")
 
 interface Entity {
   item: string
@@ -12,7 +13,8 @@ interface Entity {
 
 export const entities = defineStore('entityList', () => {
   // Setup
-  let db = new loki('marmalade.json', { autosave: true, autoload: true, autoloadCallback: initStore }), entitiesData: any
+  var fsStructuredAdapter = new LokiFsStructuredAdapter('loki')
+  let db = new loki('marmalade.json', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter }), entitiesData: any
 
   function initStore() {
     entitiesData = db.getCollection('entities')
