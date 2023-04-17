@@ -27,7 +27,7 @@
     "@vitejs/plugin-vue": "^4.1.0",
     "@volar/vue-language-plugin-pug": "^1.2.0",
     "autoprefixer": "^10.4.14",
-    "electron": "^23.1.1",
+    "electron": "^24.1.2",
     "electron-builder": "^23.6.0",
     "lokijs": "^1.5.12",
     "pinia": "^2.0.34",
