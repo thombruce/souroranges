@@ -2,10 +2,7 @@ import { ref } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
 
-var fs = require('fs')
-
-const loki = require("lokijs")
-const LokiFsStructuredAdapter = require("lokijs/src/loki-fs-structured-adapter")
+import db from "../plugins/loki"
 
 interface Entity {
   item: string
@@ -15,32 +12,7 @@ interface Entity {
 
 export const entities = defineStore('entityList', () => {
   // Setup
-  let dbName = 'marmalade.db', db: any, entitiesData: any
-
-  var userAgent = navigator.userAgent.toLowerCase()
-  if (userAgent.indexOf(' electron/') > -1) {
-    var dir = './' + dbName
-
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir)
-    }
-
-    var fsStructuredAdapter = new LokiFsStructuredAdapter('loki')
-
-    db = new loki(dir + '/store', { autosave: true, autoload: true, autoloadCallback: initStore, adapter: fsStructuredAdapter })
-  } else {
-    db = new loki(dbName, { autosave: true, autoload: true, autoloadCallback: initStore })
-  }
-
-  function initStore() {
-    entitiesData = db.getCollection('entities')
-
-    if(!entitiesData){
-       entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
-    }
-
-    entityList.value.push(...entitiesData.data)
-  }
+  let entitiesData: any
 
   // State
   const entityList = ref([] as Entity[])
@@ -49,6 +21,16 @@ export const entities = defineStore('entityList', () => {
   // e.g. const doubleCount = computed(() => count.value * 2)
 
   // Actions
+  function initStore() {
+    entitiesData = db.getCollection('entities')
+
+    if(!entitiesData){
+        entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
+    }
+
+    entityList.value.push(...entitiesData.data)
+  }
+
   function addEntity(item: string) {
     let newEntity = { item, id: uuidv4(), completed: false }
 
@@ -63,5 +45,5 @@ export const entities = defineStore('entityList', () => {
     })
   }
 
-  return { entityList, addEntity, deleteEntity }
+  return { entityList, initStore, addEntity, deleteEntity }
 })
