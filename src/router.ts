@@ -4,8 +4,8 @@ import List from './pages/List.vue'
 import Databases from './pages/Databases.vue'
 
 const routes = [
-  { path: '/', name: 'List', component: List },
-  { path: '/databases', name: 'Databases', component: Databases },
+  { path: '/', name: 'Databases', component: Databases },
+  { path: '/list', name: 'List', component: List }, // Database views should be child of Databases
 ]
 
 const router = createRouter({
