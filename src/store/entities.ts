@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid"
 
 import db from "../plugins/loki"
 
+var _ = require('lodash')
+
 interface Entity {
   item: string
   id: string
@@ -18,7 +20,9 @@ export const useEntitiesStore = defineStore('entities', () => {
   const entityList = ref([] as Entity[])
 
   // Getters
-  // e.g. const doubleCount = computed(() => count.value * 2)
+  const forDatabase = (databaseID: string | string[]) => {
+    return entityList.value.filter((object) => object.databaseID === databaseID)
+  }
 
   // Actions
   function initStore() {
@@ -28,7 +32,7 @@ export const useEntitiesStore = defineStore('entities', () => {
       entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
     }
 
-    entityList.value.push(...entitiesData.data)
+    entityList.value = _.unionBy(entityList.value, entitiesData.data, 'id')
   }
 
   function addEntity(item: string, databaseID: string | string[]) {
@@ -45,5 +49,5 @@ export const useEntitiesStore = defineStore('entities', () => {
     })
   }
 
-  return { entityList, initStore, addEntity, deleteEntity }
+  return { entityList, forDatabase, initStore, addEntity, deleteEntity }
 })
