@@ -6,9 +6,9 @@ import { unionBy as _unionBy } from 'lodash'
 import db from "../plugins/loki"
 
 interface Entity {
-  item: string
   id: string
   databaseID: string | string[]
+  name: string
 }
 
 export const useEntitiesStore = defineStore('entities', () => {
@@ -36,8 +36,8 @@ export const useEntitiesStore = defineStore('entities', () => {
     entityList.value = _unionBy(entityList.value, data, 'id')
   }
 
-  function addEntity(item: string, databaseID: string | string[]) {
-    let newEntity = { item, id: uuidv4(), databaseID }
+  function addEntity(name: string, databaseID: string | string[]) {
+    let newEntity = { name, id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
     entityList.value.push(newEntity)

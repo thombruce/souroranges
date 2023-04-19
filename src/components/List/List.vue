@@ -12,6 +12,6 @@ const entities = forDatabase(route.params.id)
 <template lang="pug">
 ul
   li(v-for="entity in entities" :key="entity.id")
-    span {{ entity.item }}
+    span {{ entity.name }}
     span(@click="deleteEntity(entity.id)") &#10060;
 </template>
