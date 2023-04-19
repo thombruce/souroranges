@@ -1,10 +1,9 @@
 import { ref } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
+import { unionBy as _unionBy } from 'lodash'
 
 import db from "../plugins/loki"
-
-var _ = require('lodash')
 
 interface Entity {
   item: string
@@ -34,7 +33,7 @@ export const useEntitiesStore = defineStore('entities', () => {
 
     let data = entitiesData.find({ databaseID })
 
-    entityList.value = _.unionBy(entityList.value, data, 'id')
+    entityList.value = _unionBy(entityList.value, data, 'id')
   }
 
   function addEntity(item: string, databaseID: string | string[]) {
