@@ -25,14 +25,16 @@ export const useEntitiesStore = defineStore('entities', () => {
   }
 
   // Actions
-  function initStore() {
+  function initStore(databaseID: string | string[]) {
     entitiesData = db.getCollection('entities')
 
     if(!entitiesData){
       entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
     }
 
-    entityList.value = _.unionBy(entityList.value, entitiesData.data, 'id')
+    let data = entitiesData.where((object: any) => object.databaseID === databaseID)
+
+    entityList.value = _.unionBy(entityList.value, data, 'id')
   }
 
   function addEntity(item: string, databaseID: string | string[]) {
