@@ -32,7 +32,7 @@ export const useEntitiesStore = defineStore('entities', () => {
       entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
     }
 
-    let data = entitiesData.where((object: any) => object.databaseID === databaseID)
+    let data = entitiesData.find({ databaseID })
 
     entityList.value = _.unionBy(entityList.value, data, 'id')
   }
