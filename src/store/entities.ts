@@ -29,7 +29,7 @@ export const useEntitiesStore = defineStore('entities', () => {
     entitiesData = db.getCollection('entities')
 
     if(!entitiesData){
-      entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
+      entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
     }
 
     let data = entitiesData.where((object: any) => object.databaseID === databaseID)
