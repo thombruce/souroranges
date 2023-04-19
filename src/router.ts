@@ -1,11 +1,18 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import Databases from './pages/Databases/Index.vue'
+import Database from './pages/Databases/_id.vue'
 import List from './pages/List.vue'
-import Databases from './pages/Databases.vue'
 
 const routes = [
   { path: '/', name: 'Databases', component: Databases },
-  { path: '/list', name: 'List', component: List }, // Database views should be child of Databases
+  {
+    path: '/:id',
+    component: Database,
+    children: [
+      { path: '', name: 'List', component: List },
+    ],
+  }
 ]
 
 const router = createRouter({

@@ -10,6 +10,6 @@ const { deleteDatabase } = store
 <template lang="pug">
 ul
   li(v-for="database in databaseList" :key="database.id")
-    span {{ database.name }}
-    span(@click="deleteDatabase(database.id)") &#10060;
+    RouterLink(:to="{ name: 'List', params: { id: database.id }}") {{ database.name }}
+    strong.text-red-600(@click="deleteDatabase(database.id)") Delete
 </template>
