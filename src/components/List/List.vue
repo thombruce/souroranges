@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { entities } from "../../store/entities"
+import { useEntitiesStore } from "../../store/entities"
 import { storeToRefs } from "pinia"
 
-const store = entities()
+const store = useEntitiesStore()
 const { entityList } = storeToRefs(store)
 const { deleteEntity } = store
 </script>

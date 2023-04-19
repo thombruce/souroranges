@@ -10,7 +10,7 @@ interface Entity {
   completed: boolean
 }
 
-export const entities = defineStore('entityList', () => {
+export const useEntitiesStore = defineStore('entities', () => {
   // Setup
   let entitiesData: any
 

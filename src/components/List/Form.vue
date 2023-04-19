@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import { entities } from "../../store/entities"
+import { useEntitiesStore } from "../../store/entities"
 
 const entity = ref("")
 
 // use Pinia store:
-const store = entities()
+const store = useEntitiesStore()
 
 function addItemAndClear(item: string) {
   if (item.length === 0) {
