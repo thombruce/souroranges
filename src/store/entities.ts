@@ -7,7 +7,7 @@ import db from "../plugins/loki"
 interface Entity {
   item: string
   id: string
-  completed: boolean
+  databaseID: string | string[]
 }
 
 export const useEntitiesStore = defineStore('entities', () => {
@@ -25,14 +25,14 @@ export const useEntitiesStore = defineStore('entities', () => {
     entitiesData = db.getCollection('entities')
 
     if(!entitiesData){
-        entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
+      entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
     }
 
     entityList.value.push(...entitiesData.data)
   }
 
-  function addEntity(item: string) {
-    let newEntity = { item, id: uuidv4(), completed: false }
+  function addEntity(item: string, databaseID: string | string[]) {
+    let newEntity = { item, id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
     entityList.value.push(newEntity)
