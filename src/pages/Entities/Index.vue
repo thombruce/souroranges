@@ -2,7 +2,8 @@
 import { useRoute } from "vue-router"
 import { useEntitiesStore } from "../../store/entities"
 
-import ListView from "../../components/List/View.vue"
+import EntitiesList from "../../components/Entities/List.vue"
+import EntitiesForm from "../../components/Entities/Form.vue"
 
 const store = useEntitiesStore()
 const route = useRoute()
@@ -11,5 +12,6 @@ store.initStore(route.params.id)
 </script>
 
 <template lang="pug">
-ListView
+EntitiesList
+EntitiesForm
 </template>
