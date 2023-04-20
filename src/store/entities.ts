@@ -40,10 +40,6 @@ export const useEntitiesStore = defineStore('entities', () => {
     let newEntity = { name, id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
-    // So now why is this not adding the entity to the store?
-    // Why can't I see it live? Is it because I'm using a getter?
-    // Yeah, probably... But also... I'm kinda not. Let me fix
-    // that.
     entityList.value.push(newEntity)
   }
 
