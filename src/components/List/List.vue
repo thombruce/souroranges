@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router"
+import { storeToRefs } from "pinia"
 import { useEntitiesStore } from "../../store/entities"
+import { useRoute } from "vue-router"
 
 const store = useEntitiesStore()
-const { forDatabase, deleteEntity } = store
+const { forDatabase } = storeToRefs(store)
+const { deleteEntity } = store
 const route = useRoute()
 
-const entities = forDatabase(route.params.id)
+const entities = forDatabase.value(route.params.id)
 </script>
 
 <template lang="pug">

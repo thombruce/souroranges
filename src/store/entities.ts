@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
 import { unionBy as _unionBy } from 'lodash'
@@ -19,9 +19,9 @@ export const useEntitiesStore = defineStore('entities', () => {
   const entityList = ref([] as Entity[])
 
   // Getters
-  const forDatabase = (databaseID: string | string[]) => {
+  const forDatabase = computed(() => (databaseID: string | string[]) => {
     return entityList.value.filter((object) => object.databaseID === databaseID)
-  }
+  })
 
   // Actions
   function initStore(databaseID: string | string[]) {
@@ -40,6 +40,10 @@ export const useEntitiesStore = defineStore('entities', () => {
     let newEntity = { name, id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
+    // So now why is this not adding the entity to the store?
+    // Why can't I see it live? Is it because I'm using a getter?
+    // Yeah, probably... But also... I'm kinda not. Let me fix
+    // that.
     entityList.value.push(newEntity)
   }
 
