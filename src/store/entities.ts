@@ -1,13 +1,14 @@
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
+import { unionBy as _unionBy } from 'lodash'
 
 import db from "../plugins/loki"
 
 interface Entity {
-  item: string
   id: string
-  completed: boolean
+  databaseID: string | string[]
+  name: string
 }
 
 export const useEntitiesStore = defineStore('entities', () => {
@@ -18,21 +19,25 @@ export const useEntitiesStore = defineStore('entities', () => {
   const entityList = ref([] as Entity[])
 
   // Getters
-  // e.g. const doubleCount = computed(() => count.value * 2)
+  const forDatabase = computed(() => (databaseID: string | string[]) => {
+    return entityList.value.filter((object) => object.databaseID === databaseID)
+  })
 
   // Actions
-  function initStore() {
+  function initStore(databaseID: string | string[]) {
     entitiesData = db.getCollection('entities')
 
     if(!entitiesData){
-        entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id'], autoupdate: true })
+      entitiesData = db.addCollection('entities', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
     }
 
-    entityList.value.push(...entitiesData.data)
+    let data = entitiesData.find({ databaseID })
+
+    entityList.value = _unionBy(entityList.value, data, 'id')
   }
 
-  function addEntity(item: string) {
-    let newEntity = { item, id: uuidv4(), completed: false }
+  function addEntity(name: string, databaseID: string | string[]) {
+    let newEntity = { name, id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
     entityList.value.push(newEntity)
@@ -45,5 +50,5 @@ export const useEntitiesStore = defineStore('entities', () => {
     })
   }
 
-  return { entityList, initStore, addEntity, deleteEntity }
+  return { entityList, forDatabase, initStore, addEntity, deleteEntity }
 })

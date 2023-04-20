@@ -1,4 +1,4 @@
-import { useEntitiesStore } from '../store/entities'
+import { useDatabasesStore } from '../store/databases'
 
 var fs = require('fs')
 const loki = require("lokijs")
@@ -22,7 +22,7 @@ if (userAgent.indexOf(' electron/') > -1) {
 }
 
 function initStore() {
-  const store = useEntitiesStore()
+  const store = useDatabasesStore()
   store.initStore()
 }
 
