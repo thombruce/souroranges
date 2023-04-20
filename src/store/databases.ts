@@ -7,6 +7,13 @@ import db from "../plugins/loki"
 interface Database {
   id: string
   name: string
+  schema: object[]
+}
+
+const defaultSchema = () => {
+  return [
+    { id: uuidv4(), name: "Name", type: "string" }
+  ]
 }
 
 export const useDatabasesStore = defineStore('databases', () => {
@@ -31,7 +38,7 @@ export const useDatabasesStore = defineStore('databases', () => {
   }
 
   function addDatabase(name: string) {
-    let newDatabase = { id: uuidv4(), name }
+    let newDatabase = { id: uuidv4(), name, schema: defaultSchema() }
 
     databasesData.insert(newDatabase)
     databaseList.value.push(newDatabase)
