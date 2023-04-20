@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia"
 import { useRoute } from "vue-router"
-import { useEntitiesStore } from "../../store/entities"
+import { useDatabasesStore } from "../../store/databases"
 
-const store = useEntitiesStore()
+const databasesStore = useDatabasesStore()
+const { find: findDatabase } = storeToRefs(databasesStore)
+
 const route = useRoute()
 
-store.initStore(route.params.id)
+const database = findDatabase.value(route.params.id)
 </script>
 
 <template lang="pug">
+h1 {{ database?.name }}
 RouterView
 </template>

@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
 
@@ -24,7 +24,9 @@ export const useDatabasesStore = defineStore('databases', () => {
   const databaseList = ref([] as Database[])
 
   // Getters
-  // e.g. const doubleCount = computed(() => count.value * 2)
+  const find = computed(() => (databaseID: string | string[]) =>
+    databaseList.value.find(database => database.id === databaseID)
+  )
 
   // Actions
   function initStore() {
@@ -51,5 +53,5 @@ export const useDatabasesStore = defineStore('databases', () => {
     })
   }
 
-  return { databaseList, initStore, addDatabase, deleteDatabase }
+  return { databaseList, find, initStore, addDatabase, deleteDatabase }
 })
