@@ -4,16 +4,14 @@ import { useEntitiesStore } from "../../store/entities"
 import { useRoute } from "vue-router"
 
 const store = useEntitiesStore()
-const { forDatabase } = storeToRefs(store)
+const { forDatabase: entities } = storeToRefs(store)
 const { deleteEntity } = store
 const route = useRoute()
-
-const entities = forDatabase.value(route.params.id)
 </script>
 
 <template lang="pug">
 ul
-  li(v-for="entity in entities" :key="entity.id")
+  li(v-for="entity in entities(route.params.id)" :key="entity.id")
     span {{ entity.name }}
     span(@click="deleteEntity(entity.id)") &#10060;
 </template>
