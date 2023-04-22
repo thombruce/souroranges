@@ -5,11 +5,15 @@ import { unionBy as _unionBy } from 'lodash'
 
 import db from "../plugins/loki"
 
+const TYPES = Object.freeze([
+  "string",
+])
+
 interface AttributeDefinition {
   id: string
   databaseID: string | string[]
   name: string
-  type: string // TODO: Can we make this an enumerator?
+  type: number // TODO: Can we make this an enumerator?
 }
 
 export const useAttributeDefinitionsStore = defineStore('attributeDefinitions', () => {
@@ -38,7 +42,7 @@ export const useAttributeDefinitionsStore = defineStore('attributeDefinitions', 
   }
 
   function addAttributeDefinition(name: string, databaseID: string | string[], type: string) {
-    let newAttributeDefinition = { name, id: uuidv4(), databaseID, type }
+    let newAttributeDefinition = { name, id: uuidv4(), databaseID, type: TYPES.indexOf(type) }
 
     attributeDefinitionsData.insert(newAttributeDefinition)
     attributeDefinitionList.value.push(newAttributeDefinition)

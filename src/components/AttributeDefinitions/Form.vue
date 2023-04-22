@@ -13,7 +13,7 @@ function addItemAndClear(item: string) {
     return
   }
 
-  store.addAttributeDefinition(item, route.params.id, "String")
+  store.addAttributeDefinition(item, route.params.id, "string")
   entity.value = ""
 }
 </script>
