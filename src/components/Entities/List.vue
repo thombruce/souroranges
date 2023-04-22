@@ -15,5 +15,5 @@ const route = useRoute()
 div
   div(v-for="entity in entities(route.params.id)" :key="entity.id")
     EntitiesItem(:entityID="entity.id")
-    span(@click="deleteEntity(entity.id)") &#10060;
+    strong.text-red-600(@click="deleteEntity(entity.id)") Delete
 </template>

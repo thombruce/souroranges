@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia"
 import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 import { useAttributesStore } from "../../store/attributes"
 
-const entity = ref("")
 const route = useRoute()
 const store = useAttributesStore()
 
@@ -19,18 +19,17 @@ const props = defineProps({
   }
 })
 
-function addItemAndClear(item: string) {
-  if (item.length === 0) {
-    return
-  }
+const { find: findAttribute } = storeToRefs(store)
+const actualAttribute = findAttribute.value(props.entityID, props.attributeDefinitionID)
 
-  store.addAttribute(item, props.entityID, props.attributeDefinitionID)
-  entity.value = ""
+const attribute = actualAttribute ? ref(actualAttribute["value"]) : ref("")
+
+function updateItem(item: string) {
+  store.addOrUpdateAttribute(item, props.entityID, props.attributeDefinitionID)
 }
 </script>
 
 <template lang="pug">
-form(@submit.prevent="addItemAndClear(entity)")
-  input(v-model="entity" type="text")
-  button Add
+form(@submit.prevent="updateItem(attribute)")
+  input(v-model="attribute" type="text")
 </template>

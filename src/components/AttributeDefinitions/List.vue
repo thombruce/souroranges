@@ -13,5 +13,5 @@ const route = useRoute()
 ul
   li(v-for="entity in attributeDefinitions(route.params.id)" :key="entity.id")
     span {{ entity.name }}
-    span(@click="deleteAttributeDefinition(entity.id)") &#10060;
+    strong.text-red-600(@click="deleteAttributeDefinition(entity.id)") Delete
 </template>

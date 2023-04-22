@@ -24,6 +24,10 @@ export const useAttributesStore = defineStore('attributes', () => {
     return attributeList.value.filter((object) => object.entityID === entityID)
   })
 
+  const find = computed(() => (entityID: string | string[], attributeDefinitionID: string | string[]) => {
+    return forEntity.value(entityID).find(attribute => attribute.attributeDefinitionID === attributeDefinitionID)
+  })
+
   // Actions
   function initStore() { // TODO: Limit load to Entities for current DB.
     attributesData = db.getCollection('attributes')
@@ -37,11 +41,17 @@ export const useAttributesStore = defineStore('attributes', () => {
     attributeList.value = _unionBy(attributeList.value, data, 'id')
   }
 
-  function addAttribute(value: string, entityID: string | string[], attributeDefinitionID: string | string[]) {
-    let newAttribute = { value, id: uuidv4(), entityID, attributeDefinitionID }
+  function addOrUpdateAttribute(value: string, entityID: string | string[], attributeDefinitionID: string | string[]) {
+    let attribute = attributesData.find({ entityID, attributeDefinitionID })[0]
 
-    attributesData.insert(newAttribute)
-    attributeList.value.push(newAttribute)
+    if(!attribute){
+      attribute = attributesData.insert({ value, id: uuidv4(), entityID, attributeDefinitionID })
+    } else {
+      attribute.value = value
+      attribute = attributesData.update(attribute)
+    }
+
+    attributeList.value.push(attribute)
   }
 
   function deleteAttribute(itemID: string) {
@@ -51,5 +61,5 @@ export const useAttributesStore = defineStore('attributes', () => {
     })
   }
 
-  return { attributeList, forEntity, initStore, addAttribute, deleteAttribute }
+  return { attributeList, find, forEntity, initStore, addOrUpdateAttribute, deleteAttribute }
 })

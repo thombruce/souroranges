@@ -21,10 +21,13 @@ const { forDatabase: attributeDefinitions } = storeToRefs(attributeDefinitionsSt
 
 <template lang="pug">
 div
-  AttributesForm(
+  div(
     v-for="attributeDefinition in attributeDefinitions(route.params.id)"
     :key="attributeDefinition.id"
-    :entityID="entityID"
-    :attributeDefinitionID="attributeDefinition.id"
   )
+    strong {{ attributeDefinition.name }}
+    AttributesForm(
+      :entityID="entityID"
+      :attributeDefinitionID="attributeDefinition.id"
+    )
 </template>
