@@ -33,7 +33,7 @@ export const useAttributesStore = defineStore('attributes', () => {
     attributesData = db.getCollection('attributes')
 
     if(!attributesData){
-      attributesData = db.addCollection('attributes', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
+      attributesData = db.addCollection('attributes', { unique: ['id'], indices: ['id', 'entityID', 'attributeDefinitionID'], autoupdate: true })
     }
 
     let data = attributesData.data // TODO: Limit load to Entities for current DB.
