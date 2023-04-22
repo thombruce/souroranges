@@ -12,6 +12,5 @@ const route = useRoute()
 <template lang="pug">
 ul
   li(v-for="entity in entities(route.params.id)" :key="entity.id")
-    span {{ entity.name }}
     span(@click="deleteEntity(entity.id)") &#10060;
 </template>
