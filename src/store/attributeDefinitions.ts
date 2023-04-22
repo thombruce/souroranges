@@ -13,7 +13,7 @@ interface AttributeDefinition {
   id: string
   databaseID: string | string[]
   name: string
-  type: number // TODO: Can we make this an enumerator?
+  type: number
 }
 
 export const useAttributeDefinitionsStore = defineStore('attributeDefinitions', () => {
