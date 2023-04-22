@@ -2,18 +2,18 @@
 import { ref } from "vue"
 import { useRoute } from "vue-router"
 
-import { useEntitiesStore } from "../../store/entities"
+import { useAttributeDefinitionsStore } from "../../store/attributeDefinitions"
 
 const entity = ref("")
 const route = useRoute()
-const store = useEntitiesStore()
+const store = useAttributeDefinitionsStore()
 
 function addItemAndClear(item: string) {
   if (item.length === 0) {
     return
   }
 
-  store.addEntity(item, route.params.id)
+  store.addAttributeDefinition(item, route.params.id, "string")
   entity.value = ""
 }
 </script>

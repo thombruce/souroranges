@@ -8,7 +8,6 @@ import db from "../plugins/loki"
 interface Entity {
   id: string
   databaseID: string | string[]
-  name: string
 }
 
 export const useEntitiesStore = defineStore('entities', () => {
@@ -36,8 +35,8 @@ export const useEntitiesStore = defineStore('entities', () => {
     entityList.value = _unionBy(entityList.value, data, 'id')
   }
 
-  function addEntity(name: string, databaseID: string | string[]) {
-    let newEntity = { name, id: uuidv4(), databaseID }
+  function addEntity(databaseID: string | string[]) {
+    let newEntity = { id: uuidv4(), databaseID }
 
     entitiesData.insert(newEntity)
     entityList.value.push(newEntity)
