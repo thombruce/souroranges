@@ -38,4 +38,8 @@ form(@submit.prevent="updateItem(attribute)")
   input(v-if="type === 0" v-model="attribute" type="text" @blur="updateItem(attribute)")
   input(v-if="type === 1" v-model="attribute" type="number" @blur="updateItem(attribute)")
   input(v-if="type === 2" v-model="attribute" type="date" @blur="updateItem(attribute)")
+  input(v-if="type === 3" v-model="attribute" type="url" @blur="updateItem(attribute)")
+  input(v-if="type === 4" v-model="attribute" type="email" @blur="updateItem(attribute)")
+  input(v-if="type === 5" v-model="attribute" type="tel" @blur="updateItem(attribute)")
+  input(v-if="type === 6" v-model="attribute" type="checkbox" @blur="updateItem(attribute)")
 </template>
