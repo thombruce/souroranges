@@ -29,5 +29,6 @@ div
     AttributesForm(
       :entityID="entityID"
       :attributeDefinitionID="attributeDefinition.id"
+      :type="attributeDefinition.type"
     )
 </template>
