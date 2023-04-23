@@ -28,7 +28,7 @@ const actualAttribute = findAttribute.value(props.entityID, props.attributeDefin
 
 const attribute = actualAttribute ? ref(actualAttribute["value"]) : ref("")
 
-function updateItem(item: string) {
+function updateItem(item: string | number) {
   store.addOrUpdateAttribute(item, props.entityID, props.attributeDefinitionID)
 }
 </script>
