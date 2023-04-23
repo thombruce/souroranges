@@ -4,17 +4,9 @@ import { v4 as uuidv4 } from "uuid"
 
 import db from "../plugins/loki"
 
-interface Database {
-  id: string
-  name: string
-}
-
 export const useDatabasesStore = defineStore('databases', () => {
-  // Setup
-  let databasesData: any
-
   // State
-  const databaseList = ref(databasesData)
+  const databaseList = ref({} as any)
 
   // Getters
   const find = computed(() => (databaseID: string | string[]) =>
