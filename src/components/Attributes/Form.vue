@@ -40,4 +40,5 @@ form(@submit.prevent="updateItem(attribute)")
   input(v-if="type === 2" v-model="attribute" type="date" @blur="updateItem(attribute)")
   input(v-if="type === 3" v-model="attribute" type="url" @blur="updateItem(attribute)")
   input(v-if="type === 4" v-model="attribute" type="email" @blur="updateItem(attribute)")
+  input(v-if="type === 5" v-model="attribute" type="tel" @blur="updateItem(attribute)")
 </template>

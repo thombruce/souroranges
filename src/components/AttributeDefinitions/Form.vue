@@ -29,5 +29,6 @@ form(@submit.prevent="addItemAndClear(attributeDefinition, attributeDefinitionTy
     option(value="date") Date
     option(value="url") URL
     option(value="email") Email
+    option(value="tel") Telephone
   button Add
 </template>
