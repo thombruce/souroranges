@@ -35,6 +35,6 @@ function updateItem(item: string | number) {
 
 <template lang="pug">
 form(@submit.prevent="updateItem(attribute)")
-  input(v-if="type === 0" v-model="attribute" type="text")
-  input(v-if="type === 1" v-model="attribute" type="number")
+  input(v-if="type === 0" v-model="attribute" type="text" @blur="updateItem(attribute)")
+  input(v-if="type === 1" v-model="attribute" type="number" @blur="updateItem(attribute)")
 </template>
