@@ -10,7 +10,7 @@ const store = useEntitiesStore()
 const attributesStore = useAttributesStore()
 const route = useRoute()
 
-store.initStore(route.params.id)
+store.initStore()
 attributesStore.initStore()
 </script>
 
