@@ -27,5 +27,6 @@ form(@submit.prevent="addItemAndClear(attributeDefinition, attributeDefinitionTy
     option(value="string") String
     option(value="number") Number
     option(value="date") Date
+    option(value="url") URL
   button Add
 </template>
