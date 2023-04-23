@@ -16,6 +16,10 @@ const props = defineProps({
   attributeDefinitionID: {
     type: String,
     required: true
+  },
+  type: {
+    type: Number,
+    required: true
   }
 })
 
@@ -24,12 +28,13 @@ const actualAttribute = findAttribute.value(props.entityID, props.attributeDefin
 
 const attribute = actualAttribute ? ref(actualAttribute["value"]) : ref("")
 
-function updateItem(item: string) {
+function updateItem(item: string | number) {
   store.addOrUpdateAttribute(item, props.entityID, props.attributeDefinitionID)
 }
 </script>
 
 <template lang="pug">
 form(@submit.prevent="updateItem(attribute)")
-  input(v-model="attribute" type="text")
+  input(v-if="type === 0" v-model="attribute" type="text")
+  input(v-if="type === 1" v-model="attribute" type="number")
 </template>

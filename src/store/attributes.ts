@@ -9,7 +9,7 @@ interface Attribute {
   id: string
   entityID: string | string[]
   attributeDefinitionID: string | string[]
-  value: string // TODO: Support different attribute types.
+  value: string | number
 }
 
 export const useAttributesStore = defineStore('attributes', () => {
@@ -41,7 +41,7 @@ export const useAttributesStore = defineStore('attributes', () => {
     attributeList.value = _unionBy(attributeList.value, data, 'id')
   }
 
-  function addOrUpdateAttribute(value: string, entityID: string | string[], attributeDefinitionID: string | string[]) {
+  function addOrUpdateAttribute(value: string | number, entityID: string | string[], attributeDefinitionID: string | string[]) {
     let attribute = attributesData.find({ entityID, attributeDefinitionID })[0]
 
     if(!attribute){
