@@ -30,5 +30,6 @@ form(@submit.prevent="addItemAndClear(attributeDefinition, attributeDefinitionTy
     option(value="url") URL
     option(value="email") Email
     option(value="tel") Telephone
+    option(value="boolean") Checkbox
   button Add
 </template>

@@ -12,6 +12,7 @@ const TYPES = Object.freeze([
   "url",
   "email",
   "tel",
+  "boolean",
 ])
 
 interface AttributeDefinition {
