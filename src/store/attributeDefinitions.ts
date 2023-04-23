@@ -1,7 +1,6 @@
 import { ref, computed } from "vue"
 import { defineStore } from "pinia"
 import { v4 as uuidv4 } from "uuid"
-import { unionBy as _unionBy } from 'lodash'
 
 import db from "../plugins/loki"
 
@@ -15,50 +14,32 @@ const TYPES = Object.freeze([
   "boolean",
 ])
 
-interface AttributeDefinition {
-  id: string
-  databaseID: string | string[]
-  name: string
-  type: number
-}
-
 export const useAttributeDefinitionsStore = defineStore('attributeDefinitions', () => {
-  // Setup
-  let attributeDefinitionsData: any
-
   // State
-  const attributeDefinitionList = ref([] as AttributeDefinition[])
+  const attributeDefinitionList = ref({} as any)
 
   // Getters
   const forDatabase = computed(() => (databaseID: string | string[]) => {
-    return attributeDefinitionList.value.filter((object) => object.databaseID === databaseID)
+    return attributeDefinitionList.value.find({ databaseID })
   })
 
   // Actions
-  function initStore(databaseID: string | string[]) {
-    attributeDefinitionsData = db.getCollection('attributeDefinitions')
+  function initStore() {
+    attributeDefinitionList.value = db.getCollection('attributeDefinitions')
 
-    if(!attributeDefinitionsData){
-      attributeDefinitionsData = db.addCollection('attributeDefinitions', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
+    if(!attributeDefinitionList.value){
+      attributeDefinitionList.value = db.addCollection('attributeDefinitions', { unique: ['id'], indices: ['id', 'databaseID'], autoupdate: true })
     }
-
-    let data = attributeDefinitionsData.find({ databaseID })
-
-    attributeDefinitionList.value = _unionBy(attributeDefinitionList.value, data, 'id')
   }
 
   function addAttributeDefinition(name: string, databaseID: string | string[], type: string) {
     let newAttributeDefinition = { name, id: uuidv4(), databaseID, type: TYPES.indexOf(type) }
 
-    attributeDefinitionsData.insert(newAttributeDefinition)
-    attributeDefinitionList.value.push(newAttributeDefinition)
+    attributeDefinitionList.value.insert(newAttributeDefinition)
   }
 
   function deleteAttributeDefinition(itemID: string) {
-    attributeDefinitionsData.chain().find({ id: itemID }).remove()
-    attributeDefinitionList.value = attributeDefinitionList.value.filter((object) => {
-      return object.id !== itemID
-    })
+    attributeDefinitionList.value.chain().find({ id: itemID }).remove()
   }
 
   return { attributeDefinitionList, forDatabase, initStore, addAttributeDefinition, deleteAttributeDefinition }

@@ -16,7 +16,7 @@ const route = useRoute()
 const database = findDatabase.value(route.params.id)
 
 const attributeDefinitionsStore = useAttributeDefinitionsStore()
-attributeDefinitionsStore.initStore(route.params.id)
+attributeDefinitionsStore.initStore()
 </script>
 
 <template lang="pug">
