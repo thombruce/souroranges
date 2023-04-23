@@ -25,7 +25,7 @@ const route = useRoute()
           span.sr-only Edit
     tbody
       tr.bg-white.border-b(v-for="entity in entities(route.params.id)" :key="entity.id")
-        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)")
+        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="attributeDefinition.id")
           AttributeForm(:entityID="entity.id" :attributeDefinitionID="attributeDefinition.id" :type="attributeDefinition.type")
         td.px-6.py-4
           strong.text-red-600(@click="deleteEntity(entity.id)") Delete
