@@ -8,6 +8,7 @@ import db from "../plugins/loki"
 const TYPES = Object.freeze([
   "string",
   "number",
+  "date",
 ])
 
 interface AttributeDefinition {

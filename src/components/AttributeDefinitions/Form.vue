@@ -26,5 +26,6 @@ form(@submit.prevent="addItemAndClear(attributeDefinition, attributeDefinitionTy
   select(v-model="attributeDefinitionType")
     option(value="string") String
     option(value="number") Number
+    option(value="date") Date
   button Add
 </template>

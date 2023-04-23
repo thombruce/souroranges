@@ -37,4 +37,5 @@ function updateItem(item: string | number) {
 form(@submit.prevent="updateItem(attribute)")
   input(v-if="type === 0" v-model="attribute" type="text" @blur="updateItem(attribute)")
   input(v-if="type === 1" v-model="attribute" type="number" @blur="updateItem(attribute)")
+  input(v-if="type === 2" v-model="attribute" type="date" @blur="updateItem(attribute)")
 </template>
