@@ -14,36 +14,30 @@ export const useDatabasesStore = defineStore('databases', () => {
   let databasesData: any
 
   // State
-  const databaseList = ref([] as Database[])
+  const databaseList = ref(databasesData)
 
   // Getters
   const find = computed(() => (databaseID: string | string[]) =>
-    databaseList.value.find(database => database.id === databaseID)
+    databaseList.value.find({ id: databaseID })[0]
   )
 
   // Actions
   function initStore() {
-    databasesData = db.getCollection('databases')
+    databaseList.value = db.getCollection('databases')
 
-    if(!databasesData){
-        databasesData = db.addCollection('databases', { unique: ['id'], indices: ['id'], autoupdate: true })
+    if(!databaseList.value){
+        databaseList.value = db.addCollection('databases', { unique: ['id'], indices: ['id'], autoupdate: true })
     }
-
-    databaseList.value.push(...databasesData.data)
   }
 
   function addDatabase(name: string) {
     let newDatabase = { id: uuidv4(), name }
 
-    databasesData.insert(newDatabase)
-    databaseList.value.push(newDatabase)
+    databaseList.value.insert(newDatabase)
   }
 
   function deleteDatabase(itemID: string) {
-    databasesData.chain().find({ id: itemID }).remove()
-    databaseList.value = databaseList.value.filter((object) => {
-      return object.id !== itemID
-    })
+    databaseList.value.chain().find({ id: itemID }).remove()
   }
 
   return { databaseList, find, initStore, addDatabase, deleteDatabase }
