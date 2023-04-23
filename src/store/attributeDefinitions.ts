@@ -10,6 +10,7 @@ const TYPES = Object.freeze([
   "number",
   "date",
   "url",
+  "email",
 ])
 
 interface AttributeDefinition {
