@@ -16,5 +16,4 @@ attributesStore.initStore()
 
 <template lang="pug">
 EntitiesTable
-EntitiesForm
 </template>

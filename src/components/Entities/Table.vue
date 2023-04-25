@@ -4,6 +4,7 @@ import { useEntitiesStore } from "../../store/entities"
 import { useAttributeDefinitionsStore } from "../../store/attributeDefinitions"
 import { useRoute } from "vue-router"
 
+import EntitiesForm from "../../components/Entities/Form.vue"
 import AttributeForm from "../Attributes/Form.vue"
 
 const store = useEntitiesStore()
@@ -25,8 +26,12 @@ const route = useRoute()
           span.sr-only Edit
     tbody
       tr.bg-white.border-b(v-for="entity in entities(route.params.id)" :key="entity.id")
-        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="attributeDefinition.id")
+        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="entity.id + attributeDefinition.id")
           AttributeForm(:entityID="entity.id" :attributeDefinitionID="attributeDefinition.id" :type="attributeDefinition.type")
         td.px-6.py-4
           strong.text-red-600(@click="deleteEntity(entity.id)") Delete
+      tr.bg-white.border-b
+        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="attributeDefinition.id")
+        td.px-6.py-4
+          EntitiesForm
 </template>
