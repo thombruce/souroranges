@@ -1,13 +1,14 @@
 import { useDatabasesStore } from '../store/databases'
 
-var fs = require('fs')
-const loki = require("lokijs")
-const LokiFsStructuredAdapter = require("lokijs/src/loki-fs-structured-adapter")
+import fs from 'fs'
+import loki from 'lokijs'
 
 let dbName = 'marmalade.db', db: any
 
 var userAgent = navigator.userAgent.toLowerCase()
 if (userAgent.indexOf(' electron/') > -1) {
+  const LokiFsStructuredAdapter = require('lokijs/src/loki-fs-structured-adapter')
+
   var dir = './' + dbName
 
   if (!fs.existsSync(dir)){

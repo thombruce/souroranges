@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.194",
+    "@types/lokijs": "^1.5.7",
     "@types/uuid": "^9.0.1",
     "@vitejs/plugin-vue": "^4.1.0",
     "@volar/vue-language-plugin-pug": "^1.2.0",
