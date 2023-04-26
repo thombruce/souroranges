@@ -17,21 +17,21 @@ const route = useRoute()
 
 <template lang="pug">
 .relative.overflow-x-auto
-  table.w-full.text-sm.text-left.text-gray-500
-    thead.text-xs.text-gray-700.uppercase.bg-gray-50
+  table
+    thead
       tr
-        th.px-6.py-3(v-for="attributeDefinition in attributeDefinitions(route.params.id)" scope="col")
+        th(v-for="attributeDefinition in attributeDefinitions(route.params.id)" scope="col")
           | {{ attributeDefinition.name }}
-        th.px-6.py-3(scope="col")
+        th(scope="col")
           span.sr-only Edit
     tbody
-      tr.bg-white.border-b(v-for="entity in entities(route.params.id)" :key="entity.id")
-        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="entity.id + attributeDefinition.id")
+      tr(v-for="entity in entities(route.params.id)" :key="entity.id")
+        td(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="entity.id + attributeDefinition.id")
           AttributeForm(:entityID="entity.id" :attributeDefinitionID="attributeDefinition.id" :type="attributeDefinition.type")
-        td.px-6.py-4
+        td
           strong.text-red-600(@click="deleteEntity(entity.id)") Delete
-      tr.bg-white.border-b
-        td.px-6.py-4(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="attributeDefinition.id")
-        td.px-6.py-4
+      tr
+        td(v-for="attributeDefinition in attributeDefinitions(route.params.id)" :key="attributeDefinition.id")
+        td
           EntitiesForm
 </template>
