@@ -8,7 +8,9 @@ let dbName = 'marmalade.db', db: any
 
 var userAgent = navigator.userAgent.toLowerCase()
 if (userAgent.indexOf(' electron/') > -1) {
-  var dir = './' + dbName
+  let currentDir = process.platform === 'win32' ? process.env.PORTABLE_EXECUTABLE_DIR : './'
+
+  var dir = currentDir + dbName
 
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir)
