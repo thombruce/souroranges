@@ -12,6 +12,8 @@ var userAgent = navigator.userAgent.toLowerCase()
 if (userAgent.indexOf(' electron/') > -1) {
   let currentDir = '.'
 
+  console.log(process.env)
+
   if (process.platform === 'win32' && process.env.PORTABLE_EXECUTABLE_DIR) {
     currentDir = process.env['PORTABLE_EXECUTABLE_DIR']
   }
