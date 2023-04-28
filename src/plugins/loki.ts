@@ -1,5 +1,7 @@
 import { useDatabasesStore } from '../store/databases'
 
+import { process } from '@electron/remote'
+
 var fs = require('fs')
 const loki = require("lokijs")
 const LokiFsStructuredAdapter = require("lokijs/src/loki-fs-structured-adapter")
@@ -11,7 +13,7 @@ if (userAgent.indexOf(' electron/') > -1) {
   let currentDir = '.'
 
   if (process.platform === 'win32' && process.env.PORTABLE_EXECUTABLE_DIR) {
-    currentDir = process.env.PORTABLE_EXECUTABLE_DIR
+    currentDir = process.env['PORTABLE_EXECUTABLE_DIR']
   }
 
   var dir = currentDir + '/' + dbName

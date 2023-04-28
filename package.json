@@ -24,6 +24,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.9",
     "lokijs": "^1.5.12",
     "uuid": "^9.0.0"
   },

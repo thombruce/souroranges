@@ -1,6 +1,9 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { initialize, enable as enableRemote } from '@electron/remote/main'
 import { release } from 'node:os'
 import { join } from 'node:path'
+
+initialize()
 
 // The built directory structure
 //
@@ -53,6 +56,8 @@ async function createWindow() {
       contextIsolation: false,
     },
   })
+
+  enableRemote(win.webContents)
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
