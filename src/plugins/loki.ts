@@ -10,8 +10,8 @@ var userAgent = navigator.userAgent.toLowerCase()
 if (userAgent.indexOf(' electron/') > -1) {
   let currentDir = '.'
 
-  if (process.platform === 'win32' && process.env.LOCALAPPDATA) {
-    currentDir = process.env.LOCALAPPDATA + '/Marmalade'
+  if (process.platform === 'win32' && process.env.PORTABLE_EXECUTABLE_DIR) {
+    currentDir = process.env.PORTABLE_EXECUTABLE_DIR
   }
 
   var dir = currentDir + '/' + dbName
