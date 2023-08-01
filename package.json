@@ -35,7 +35,7 @@
     "@volar/vue-language-plugin-pug": "^1.2.0",
     "autoprefixer": "^10.4.14",
     "electron": "^24.1.2",
-    "electron-builder": "^23.6.0",
+    "electron-builder": "^24.6.3",
     "lodash": "^4.17.21",
     "pinia": "^2.0.34",
     "postcss": "^8.4.21",
